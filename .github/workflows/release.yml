@@ -35,14 +35,14 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install -e .
-          pip install nuitka zstandard
+          python -m pip install -e .
+          python -m pip install pytest nuitka zstandard
 
       - name: Run Tests
         env:
           PYTHONPATH: src
         run: |
-          pytest -q
+          python -m pytest -q
 
       - name: Build with Nuitka
         run: |

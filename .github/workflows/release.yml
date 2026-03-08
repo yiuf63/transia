@@ -41,6 +41,7 @@ jobs:
       - name: Run Tests
         env:
           PYTHONPATH: src
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: |
           python -m pytest -q
 

@@ -1,15 +1,24 @@
 import unittest
+import re
 from unittest.mock import AsyncMock, patch
+
 from typer.testing import CliRunner
+
 from transia.main import app
 
 runner = CliRunner()
+ANSI_ESCAPE_RE = re.compile(r"\x1b\[[0-9;]*m")
+
+
+def strip_ansi(text: str) -> str:
+    return ANSI_ESCAPE_RE.sub("", text)
+
 
 class TestCLIUpdated(unittest.TestCase):
     def test_cli_new_params(self):
         result = runner.invoke(app, ["translate", "--help"])
         self.assertEqual(result.exit_code, 0)
-        self.assertIn("--search", result.stdout)
+        self.assertIn("--search", strip_ansi(result.stdout))
 
     def test_cli_parameter_logic(self):
         # 验证命令是否能识别新参数并启动（即使最后因为文件不存在退出）

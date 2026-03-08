@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "transia"
-version = "0.1.0"
+version = "0.1.2"
 description = "Intelligence Ebook Translator: Batch-optimized, Context-aware, and Self-evolving."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -17,6 +17,7 @@ dependencies = [
     "rich>=13.0.0",
     "lxml>=4.9.0",
     "httpx>=0.24.0",
+    "mechanize>=0.4.8",
     "duckduckgo-search>=3.8.0",
     "python-dotenv>=1.0.0",
 ]

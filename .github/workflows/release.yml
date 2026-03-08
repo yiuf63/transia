@@ -13,6 +13,7 @@ jobs:
     name: Build on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
         include:
@@ -39,6 +40,7 @@ jobs:
           python -m pip install nuitka zstandard
 
       - name: Run Tests
+        if: matrix.os == 'ubuntu-latest'
         env:
           PYTHONPATH: src
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"

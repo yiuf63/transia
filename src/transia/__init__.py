@@ -4,5 +4,5 @@ from .translation_service import TranslationService
 from .standalone_engines import DeepSeekEngine, OpenAICompatibleEngine, GoogleFreeEngine, AnthropicCompatibleEngine
 from .standalone_utils import ConfigurationManager
 
-__version__ = "0.1.3"
+__version__ = "0.1.4"
 __all__ = ["TranslationService", "DeepSeekEngine", "OpenAICompatibleEngine", "GoogleFreeEngine", "AnthropicCompatibleEngine", "ConfigurationManager"]

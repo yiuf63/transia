@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "transia"
+version = "2.1.0"
+description = "Intelligence Ebook Translator: Batch-optimized, Context-aware, and Self-evolving."
+readme = "README.md"
+requires-python = ">=3.9"
+license = {text = "AGPL-3.0"}
+authors = [
+    {name = "Yiuf"}
+]
+dependencies = [
+    "typer[all]>=0.9.0",
+    "rich>=13.0.0",
+    "lxml>=4.9.0",
+    "httpx>=0.24.0",
+    "duckduckgo-search>=3.8.0",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "mypy>=1.8.0",
+]
+
+[project.scripts]
+transia = "transia.main:app"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["transia*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+
+[tool.mypy]
+python_version = "3.9"
+files = ["src/transia"]
+warn_unused_configs = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+no_implicit_optional = true
+
+[[tool.mypy.overrides]]
+module = ["lxml.*", "mechanize.*"]
+ignore_missing_imports = true

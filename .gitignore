@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.pyo
+*.pyd
+*.cover
+htmlcov/
+env/
+venv/
+.venv/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Transia Specific
+translations.db
+web_storage/
+letranger_*.epub
+tests/alice_translated_manual.epub
+tests/*_out.srt
+*.log
+evolved_terms.txt
+glossary_result.txt
+config.json
+.env
+.env.*
+
+# IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Nuitka
+*.build/
+*.onefile-build/

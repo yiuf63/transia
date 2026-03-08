@@ -1,0 +1,71 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            artifact_name: transia-linux
+          - os: windows-latest
+            artifact_name: transia-windows.exe
+          - os: macos-latest
+            artifact_name: transia-macos
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install Dependencies
+        run: |
+          pip install -e .
+          pip install nuitka zstandard
+
+      - name: Run Tests
+        env:
+          PYTHONPATH: src
+        run: |
+          pytest -q
+
+      - name: Build with Nuitka
+        run: |
+          python -m nuitka --standalone --onefile --include-package=transia src/transia/main.py --output-dir=dist --output-filename=${{ matrix.artifact_name }}
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: dist/${{ matrix.artifact_name }}
+
+  release:
+    name: Create Multi-Platform Release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Create GitHub Release
+        id: create_github_release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            transia-linux/transia-linux
+            transia-windows.exe/transia-windows.exe
+            transia-macos/transia-macos
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
